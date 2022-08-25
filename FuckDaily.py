@@ -5,10 +5,9 @@ import json
 class FuckDaily():
 
     def __init__(self):
-        self.username = '2203265020'#账号
-        self.password = '265020'#密码
-        self.address='江苏省/泰州市/泰兴市'#地址
-
+        self.username = '**********'#账号
+        self.password = '******'#密码
+        self.address='***/***/***'#地址，例如'江苏省/南京市/江宁区'
         self.severInform = ''#sever酱通知密钥
         # -------------------------------------------------------------------------------------------------------------
         self.headers = {
