@@ -25,10 +25,6 @@ jobs:
         run: |
           sudo -E apt-get -yqq update
           sudo -E apt-get -yqq install python3
-      - name: Download DailyCP
-        run: |
-          git clone https://github.com/Reclizer/Fuckdaily-for-jit
-          mv ./FuckDaily/* ./
       - name: Install extensions
         run: |
           pip3 install setuptools
