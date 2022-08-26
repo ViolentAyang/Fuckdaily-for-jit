@@ -1,3 +1,5 @@
+import sys
+
 import requests
 import re
 import json
@@ -7,7 +9,8 @@ class FuckDaily():
     def __init__(self,username,password,address,sever):
         self.username = username#账号
         self.password = password#密码
-        self.address=address#地址，例如'江苏省/南京市/江宁区'
+        self.address = address#地址
+
         self.severInform = sever#sever酱通知密钥
         # -------------------------------------------------------------------------------------------------------------
         self.headers = {
@@ -104,32 +107,32 @@ class FuckDaily():
         infoUrl = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/getLatestDailyReportData.do'
         stuInfo = requests.post(infoUrl,cookies=cookies, headers=self.headers, data=self.params)
         stuJson = stuInfo.json()
-        row = stuJson['datas']['getLatestDailyReportData']['rows']
+        row1 = stuJson['datas']['getLatestDailyReportData']['rows']
 
         infoUrl2 = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/V_LWPUB_JKDK_QUERY.do'
         stuInfo2 = requests.post(infoUrl2, cookies=cookies, headers=self.headers, data=self.params)
-        stuJson2 = stuInfo.json()
-        row = stuJson2['datas']['V_LWPUB_JKDK_QUERY']['rows']
+        stuJson2 = stuInfo2.json()
+        row2 = stuJson2['datas']['V_LWPUB_JKDK_QUERY']['rows']
 
         infoDict={
-            "BY4": row[0]['BY4'],
-            "BY3": row[0]['BY3'],
-            "TODAY_VACCINE_CONDITION": row[0]['TODAY_VACCINE_CONDITION'],
-            "BY4_DISPLAY": row[0]['BY4_DISPLAY'],
-            "TODAY_NAT_CONDITION": row[0]['TODAY_NAT_CONDITION'],
-            "TODAY_NAT_CONDITION_DISPLAY": row[0]['TODAY_NAT_CONDITION_DISPLAY'],
-            "BY1": row[0]['BY1'],
-            "TODAY_VACCINE_CONDITION_DISPLAY": row[0]['TODAY_VACCINE_CONDITION_DISPLAY'],
-            "TODAY_CONDITION": row[0]['TODAY_CONDITION'],
-            "BY3_DISPLAY": row[0]['BY3_DISPLAY'],
-            "PHONE_NUMBER": row[0]['PHONE_NUMBER'],
-            "TODAY_CONDITION_DISPLAY": row[0]['TODAY_CONDITION_DISPLAY'],
-            "BY1_DISPLAY": row[0]['BY1_DISPLAY'],
-            "BY19": row[0]['BY19'],
+            "BY4": row1[0]['BY4'],
+            "BY3": row1[0]['BY3'],
+            "TODAY_VACCINE_CONDITION": row1[0]['TODAY_VACCINE_CONDITION'],
+            "BY4_DISPLAY": row1[0]['BY4_DISPLAY'],
+            "TODAY_NAT_CONDITION": row1[0]['TODAY_NAT_CONDITION'],
+            "TODAY_NAT_CONDITION_DISPLAY": row1[0]['TODAY_NAT_CONDITION_DISPLAY'],
+            "BY1": row1[0]['BY1'],
+            "TODAY_VACCINE_CONDITION_DISPLAY": row1[0]['TODAY_VACCINE_CONDITION_DISPLAY'],
+            "TODAY_CONDITION": row1[0]['TODAY_CONDITION'],
+            "BY3_DISPLAY": row1[0]['BY3_DISPLAY'],
+            "PHONE_NUMBER": row1[0]['PHONE_NUMBER'],
+            "TODAY_CONDITION_DISPLAY": row1[0]['TODAY_CONDITION_DISPLAY'],
+            "BY1_DISPLAY": row1[0]['BY1_DISPLAY'],
+            "BY19": row1[0]['BY19'],
 
-            "USER_NAME": row[0]['USER_NAME'],
-            "DEPT_CODE": row[0]['DEPT_CODE'],
-            "DEPT_NAME": row[0]['DEPT_NAME'],
+            "USER_NAME": row2[0]['USER_NAME'],
+            "DEPT_CODE": row2[0]['DEPT_CODE'],
+            "DEPT_NAME": row2[0]['DEPT_NAME'],
 
         }
         return infoDict
@@ -284,12 +287,15 @@ class FuckDaily():
 
         signIn = requests.post(reSaveUrl, data=data,headers=self.headers,cookies=cookies)
         signJson = signIn.json()
+        print(signJson)
+        '''
         save = signJson['datas']
         saveObj=save.get['T_HEALTH_DAILY_INFO_SAVE']
         if saveObj==1:
             print('ok')
         else:
             self.state='打卡失败'
+        '''
 
     def severChan(self,severDay):
         #sever酱微信通知
@@ -302,6 +308,7 @@ class FuckDaily():
 
     def run(self):
         cookies=FuckDaily.login(self)
+
         severTime=FuckDaily.time(self,cookies)
         severDay = re.findall('(.*?) ', severTime)[0]
 
@@ -310,8 +317,7 @@ class FuckDaily():
         addDict=FuckDaily.addInfo(self,cookies)
         FuckDaily.signIn(self,cookies,severTime,severDay,widDict,infoDict,addDict)
         FuckDaily.severChan(self,severDay)
-
-
+        
 if __name__ == '__main__':
-    app = FuckDaily(sys.argv[1],sys.argv[2],sys.argv[3])
+    app = FuckDaily(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
     app.run()
