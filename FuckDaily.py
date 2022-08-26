@@ -4,11 +4,11 @@ import json
 
 class FuckDaily():
 
-    def __init__(self):
-        self.username = '**********'#账号
-        self.password = '******'#密码
-        self.address='***/***/***'#地址，例如'江苏省/南京市/江宁区'
-        self.severInform = ''#sever酱通知密钥
+    def __init__(self,username,password,address,sever):
+        self.username = username#账号
+        self.password = password#密码
+        self.address=address#地址，例如'江苏省/南京市/江宁区'
+        self.severInform = sever#sever酱通知密钥
         # -------------------------------------------------------------------------------------------------------------
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0',
@@ -309,8 +309,9 @@ class FuckDaily():
         infoDict=FuckDaily.getInfo(self,cookies)
         addDict=FuckDaily.addInfo(self,cookies)
         FuckDaily.signIn(self,cookies,severTime,severDay,widDict,infoDict,addDict)
+        FuckDaily.severChan(self,severDay)
 
 
 if __name__ == '__main__':
-    app = FuckDaily()
+    app = FuckDaily(sys.argv[1],sys.argv[2],sys.argv[3])
     app.run()
