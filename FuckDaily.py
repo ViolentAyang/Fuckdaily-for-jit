@@ -6,12 +6,12 @@ import json
 
 class FuckDaily():
 
-    def __init__(self,username,password,address,sever):
-        self.username = username#账号
-        self.password = password#密码
-        self.address = address#地址
+    def __init__(self):
+        self.username = os.environ['ACCOUNT']#账号
+        self.password = os.environ['PASSWORD']#密码
+        self.address = os.environ['ADDRESS']#地址
 
-        self.severInform = sever#sever酱通知密钥
+        self.severInform = os.environ['SEVERKEY']#sever酱通知密钥
         # -------------------------------------------------------------------------------------------------------------
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0',
@@ -319,5 +319,5 @@ class FuckDaily():
         FuckDaily.severChan(self,severDay)
         
 if __name__ == '__main__':
-    app = FuckDaily(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
+    app = FuckDaily()
     app.run()
