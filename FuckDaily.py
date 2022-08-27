@@ -9,7 +9,6 @@ class FuckDaily():
     def __init__(self):
         self.username = os.environ['ACCOUNT']#账号
         self.password = os.environ['PASSWORD']#密码
-        self.address = os.environ['ADDRESS']#地址
 
         self.severInform = os.environ['SEVERKEY']#sever酱通知密钥
         # -------------------------------------------------------------------------------------------------------------
@@ -95,47 +94,15 @@ class FuckDaily():
 
         return DateTime
 
-    def signJudge(self,cookies):
-        reportUrl = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/getTodayHasReported.do'
-        getReport = requests.post(reportUrl, data=self.params,headers=self.headers,cookies=cookies)
-        report = getReport.content.decode()
-        reportObj = re.search(r'TODAY_TARRY_CONDITION_DISPLAY', report, re.M | re.I)
-        return reportObj
-
     def getInfo(self,cookies):
-        #获取上一次填写的数据和学生基本信息
-        infoUrl = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/getLatestDailyReportData.do'
-        stuInfo = requests.post(infoUrl,cookies=cookies, headers=self.headers, data=self.params)
-        stuJson = stuInfo.json()
-        row1 = stuJson['datas']['getLatestDailyReportData']['rows']
+        #获取前一天填写的表单所有信息
+        infoUrl='http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/getMyDailyReportDatas.do'
 
-        infoUrl2 = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/V_LWPUB_JKDK_QUERY.do'
-        stuInfo2 = requests.post(infoUrl2, cookies=cookies, headers=self.headers, data=self.params)
-        stuJson2 = stuInfo2.json()
-        row2 = stuJson2['datas']['V_LWPUB_JKDK_QUERY']['rows']
-
-        infoDict={
-            "BY4": row1[0]['BY4'],
-            "BY3": row1[0]['BY3'],
-            "TODAY_VACCINE_CONDITION": row1[0]['TODAY_VACCINE_CONDITION'],
-            "BY4_DISPLAY": row1[0]['BY4_DISPLAY'],
-            "TODAY_NAT_CONDITION": row1[0]['TODAY_NAT_CONDITION'],
-            "TODAY_NAT_CONDITION_DISPLAY": row1[0]['TODAY_NAT_CONDITION_DISPLAY'],
-            "BY1": row1[0]['BY1'],
-            "TODAY_VACCINE_CONDITION_DISPLAY": row1[0]['TODAY_VACCINE_CONDITION_DISPLAY'],
-            "TODAY_CONDITION": row1[0]['TODAY_CONDITION'],
-            "BY3_DISPLAY": row1[0]['BY3_DISPLAY'],
-            "PHONE_NUMBER": row1[0]['PHONE_NUMBER'],
-            "TODAY_CONDITION_DISPLAY": row1[0]['TODAY_CONDITION_DISPLAY'],
-            "BY1_DISPLAY": row1[0]['BY1_DISPLAY'],
-            "BY19": row1[0]['BY19'],
-
-            "USER_NAME": row2[0]['USER_NAME'],
-            "DEPT_CODE": row2[0]['DEPT_CODE'],
-            "DEPT_NAME": row2[0]['DEPT_NAME'],
-
-        }
-        return infoDict
+        info = requests.post(infoUrl,headers=self.headers,cookies=cookies)
+        infoJson=info.json()
+        row = infoJson['datas']['getMyDailyReportDatas']['rows']
+        stuInfo=row[0]
+        return stuInfo
 
     def widInfo(self,cookies):
         widUrl = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/getMyTodayReportWid.do'
@@ -153,61 +120,7 @@ class FuckDaily():
 
         return widDict
 
-    def addInfo(self,cookies):
-        add = re.search(r'(.*)/(.*)/(.*)', self.address, re.M | re.I)
-        province = add.group(1)
-        city = add.group(2)
-        county = add.group(3)
-
-
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0',
-            'Referer': 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/index.do?amp_sec_version_=1',
-        }
-
-        add1Url = 'http://ehallapp.jit.edu.cn/qljfwapp/code/7c768460-374d-433f-a52b-30d72c2d95a1/1.do'
-        add2Url = 'http://ehallapp.jit.edu.cn/qljfwapp/code/7c768460-374d-433f-a52b-30d72c2d95a1/2.do'
-        add3Url = 'http://ehallapp.jit.edu.cn/qljfwapp/code/7c768460-374d-433f-a52b-30d72c2d95a1/3.do'
-
-        add1 = requests.post(add1Url, cookies=cookies, headers=headers)
-        add1Json = add1.json()
-        rows = add1Json['datas']['code']['rows']
-        id_by_name = dict([(p['name'], p['id']) for p in rows])
-        proId = id_by_name[province]  # ************************************************************
-
-        dainfo = '[{\"name\":\"LS\",\"value\":\"' + proId + '\",\"builder\":\"equal\",\"linkOpt\":\"AND\"}]'
-        data = {
-            "searchValue": dainfo,
-        }
-        add2 = requests.post(add2Url, cookies=cookies, headers=headers, data=data)
-        add2Json = add2.json()
-        rows = add2Json['datas']['code']['rows']
-        id_by_name = dict([(p['name'], p['id']) for p in rows])
-        cityId = id_by_name[city]  # *****************************************************************
-
-        dainfo = '[{\"name\":\"LS\",\"value\":\"' + cityId + '\",\"builder\":\"equal\",\"linkOpt\":\"AND\"}]'
-        data = {
-            "searchValue": dainfo,
-        }
-        add3 = requests.post(add3Url, cookies=cookies, headers=headers, data=data)
-        add3Json = add3.json()
-        rows = add3Json['datas']['code']['rows']
-        id_by_name = dict([(p['name'], p['id']) for p in rows])
-        couId = id_by_name[county]  # *****************************************************************
-
-        addDict = {
-            'province': province,
-            'city': city,
-            'county': county,
-            'proId': proId,
-            'cityId': cityId,
-            'couId': couId,
-            'todayAdd':province+city,
-        }
-        return addDict
-
-
-    def signIn(self,cookies,severTime,severDay,widDict,infoDict,addDict):
+    def signIn(self,cookies,severTime,severDay,widDict,stuDict):
 
         reSaveUrl = 'http://ehallapp.jit.edu.cn/qljfwapp/sys/lwJitHealthInfoDailyClock/modules/healthClock/T_HEALTH_DAILY_INFO_SAVE.do'
         data = {
@@ -222,36 +135,36 @@ class FuckDaily():
             "CZZXM": "",
             "CZRQ": widDict.get('CZRQ'),
             "USER_ID": self.username,
-            "USER_NAME": infoDict.get('USER_NAME'),
-            "DEPT_CODE_DISPLAY": infoDict.get('DEPT_NAME'),
-            "DEPT_CODE": infoDict.get('DEPT_CODE'),
-            "DEPT_NAME": infoDict.get('DEPT_NAME'),
-            "PHONE_NUMBER": infoDict.get('PHONE_NUMBER'),
+            "USER_NAME":stuDict.get('USER_NAME'),
+            "DEPT_CODE_DISPLAY":stuDict.get('DEPT_CODE_DISPLAY'),
+            "DEPT_CODE":stuDict.get('DEPT_CODE') ,
+            "DEPT_NAME": stuDict.get('DEPT_NAME'),
+            "PHONE_NUMBER": stuDict.get('PHONE_NUMBER'),
             "FILL_TIME": severTime,
-            "CLOCK_SITUATION": addDict.get('todayAdd'),
-            "BY3_DISPLAY": addDict.get('province'),
-            "BY3": addDict.get('proId'),
-            "BY4_DISPLAY": addDict.get('city'),
-            "BY4": addDict.get('cityId'),
-            "BY11_DISPLAY": addDict.get('county'),
-            "BY11": addDict.get('couId'),
+            "CLOCK_SITUATION": stuDict.get('CLOCK_SITUATION'),
+            "BY3_DISPLAY": stuDict.get('BY3_DISPLAY'),
+            "BY3": stuDict.get('BY3'),
+            "BY4_DISPLAY": stuDict.get('BY4_DISPLAY'),
+            "BY4": stuDict.get('BY4'),
+            "BY11_DISPLAY": stuDict.get('BY11_DISPLAY'),
+            "BY11": stuDict.get('BY11'),
 
-            "TODAY_SITUATION_DISPLAY": "南京市外江苏省内",
-            "TODAY_SITUATION": "004",
-            "TODAY_CONDITION_DISPLAY": infoDict.get('TODAY_CONDITION_DISPLAY'),
-            "TODAY_CONDITION": infoDict.get('TODAY_CONDITION'),
-            "CONTACT_HISTORY_DISPLAY": "无",
-            "CONTACT_HISTORY": "001",
-            "TODAY_NAT_CONDITION_DISPLAY": infoDict.get('TODAY_NAT_CONDITION_DISPLAY'),
-            "TODAY_NAT_CONDITION": infoDict.get('TODAY_NAT_CONDITION'),
-            "TODAY_VACCINE_CONDITION_DISPLAY": infoDict.get('TODAY_VACCINE_CONDITION_DISPLAY'),
-            "TODAY_VACCINE_CONDITION": infoDict.get('TODAY_VACCINE_CONDITION'),
-            "TODAY_HEALTH_CODE_DISPLAY": "绿码",
-            "TODAY_HEALTH_CODE": "001",
-            "BY1_DISPLAY": infoDict.get('BY1_DISPLAY'),
-            "BY1": infoDict.get('BY1'),
-            "BY19_DISPLAY": self.address,
-            "BY19": addDict.get('couId'),
+            "TODAY_SITUATION_DISPLAY": stuDict.get('TODAY_SITUATION_DISPLAY'),
+            "TODAY_SITUATION":stuDict.get('TODAY_SITUATION') ,
+            "TODAY_CONDITION_DISPLAY":stuDict.get('TODAY_CONDITION_DISPLAY') ,
+            "TODAY_CONDITION": stuDict.get('TODAY_CONDITION'),
+            "CONTACT_HISTORY_DISPLAY":stuDict.get('CONTACT_HISTORY_DISPLAY') ,
+            "CONTACT_HISTORY":stuDict.get('CONTACT_HISTORY') ,
+            "TODAY_NAT_CONDITION_DISPLAY":stuDict.get('TODAY_NAT_CONDITION_DISPLAY') ,
+            "TODAY_NAT_CONDITION": stuDict.get('TODAY_NAT_CONDITION'),
+            "TODAY_VACCINE_CONDITION_DISPLAY":stuDict.get('TODAY_VACCINE_CONDITION_DISPLAY') ,
+            "TODAY_VACCINE_CONDITION": stuDict.get('TODAY_VACCINE_CONDITION'),
+            "TODAY_HEALTH_CODE_DISPLAY": stuDict.get('TODAY_HEALTH_CODE_DISPLAY'),
+            "TODAY_HEALTH_CODE":stuDict.get('TODAY_HEALTH_CODE') ,
+            "BY1_DISPLAY":stuDict.get('BY1_DISPLAY') ,
+            "BY1":stuDict.get('BY1') ,
+            "BY19_DISPLAY": stuDict.get('BY19_DISPLAY'),
+            "BY19": stuDict.get('BY19'),
             "BY5": "",
             "BY6": "",
             "BY20": "",
@@ -284,18 +197,9 @@ class FuckDaily():
             "BY15_DISPLAY": "",
             "BY15": ""
         }
-
         signIn = requests.post(reSaveUrl, data=data,headers=self.headers,cookies=cookies)
         signJson = signIn.json()
         print(signJson)
-        '''
-        save = signJson['datas']
-        saveObj=save.get['T_HEALTH_DAILY_INFO_SAVE']
-        if saveObj==1:
-            print('ok')
-        else:
-            self.state='打卡失败'
-        '''
 
     def severChan(self,severDay):
         #sever酱微信通知
@@ -308,16 +212,15 @@ class FuckDaily():
 
     def run(self):
         cookies=FuckDaily.login(self)
-
         severTime=FuckDaily.time(self,cookies)
         severDay = re.findall('(.*?) ', severTime)[0]
+        widDict = FuckDaily.widInfo(self, cookies)
+        stuInfo=FuckDaily.getInfo(self,cookies)
+        FuckDaily.signIn(self, cookies, severTime, severDay, widDict,stuInfo)
 
-        widDict=FuckDaily.widInfo(self,cookies)
-        infoDict=FuckDaily.getInfo(self,cookies)
-        addDict=FuckDaily.addInfo(self,cookies)
-        FuckDaily.signIn(self,cookies,severTime,severDay,widDict,infoDict,addDict)
         FuckDaily.severChan(self,severDay)
-        
+
 if __name__ == '__main__':
     app = FuckDaily()
     app.run()
+
