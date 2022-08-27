@@ -36,4 +36,4 @@ jobs:
           ADDRESS: ${{ secrets.ADDRESS }}
           SEVERKEY: ${{ secrets.SEVERKEY }}
         run: |
-          python3 FuckDaily.py ${ACCOUNT} ${PASSWORD} ${ADDRESS} ${SEVERKEY}
+          python3 FuckDaily.py  ${{ secrets.ACCOUNT }} ${{ secrets.PASSWORD }} ${{ secrets.ADDRESS }} ${{ secrets.SEVERKEY }}
