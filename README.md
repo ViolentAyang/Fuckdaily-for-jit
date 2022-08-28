@@ -8,13 +8,4 @@
 每日打卡表单的数据会自动获取前一天（上一次填写的表单）填写的数据填写，当需要更新表单时，自行去打卡界面重新填写并保存，脚本无需做任何更改。需要更新secrets数据时在原先设置secrets的地方点选对应密钥的update。如果想停止运行脚本，可以在Action中的AutoDaily里右上角三个点选项中点击Disable Workflow关闭
 
 #### 图文教程
-![](imagec/01.png)
-![](imagec/02.png)
-![](imagec/03.png)
-![](imagec/04.png)
-![](imagec/05.png)
-![](imagec/06.png)
-![](imagec/07.png)
-![](imagec/08.png)
-![](imagec/09.png)
-![](imagec/10.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/01.png)
