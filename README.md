@@ -19,7 +19,8 @@ Fork本项目
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/05.png)
 设置账号密码
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/06.png)
-![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/07.png)
+
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/08.png)
-![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/09.png)
+填写密钥'USERNAME' 'PASSWORD' 'SEVERKEY'
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/10.png)
+运行
