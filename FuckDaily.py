@@ -223,4 +223,3 @@ class FuckDaily():
 if __name__ == '__main__':
     app = FuckDaily()
     app.run()
-
