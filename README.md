@@ -9,10 +9,15 @@
 
 #### 图文教程
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/01.png)
+Fork本项目
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/02.png)
+创建仓库
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/03.png)
+配置工作环境
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/04.png)
+进入设置
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/05.png)
+设置账号密码
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/06.png)
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/07.png)
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/08.png)
