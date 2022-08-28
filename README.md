@@ -21,6 +21,6 @@ Fork本项目
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/06.png)
 
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/08.png)
-填写密钥'USERNAME' 'PASSWORD' 'SEVERKEY'
+填写密钥`ACCOUNT`、`PASSWORD`、`SEVERKEY`
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/10.png)
 运行
