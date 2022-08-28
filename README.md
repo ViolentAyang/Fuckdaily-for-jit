@@ -9,3 +9,12 @@
 
 #### 图文教程
 ![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/01.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/02.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/03.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/04.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/05.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/06.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/07.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/08.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/09.png)
+![image](https://github.com/Reclizer/Fuckdaily-for-jit/blob/main/image/10.png)
