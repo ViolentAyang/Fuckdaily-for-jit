@@ -32,7 +32,6 @@ jobs:
         env:
           ACCOUNT: ${{ secrets.ACCOUNT }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          ADDRESS: ${{ secrets.ADDRESS }}
           SEVERKEY: ${{ secrets.SEVERKEY }}
         run: |
-          python3 FuckDaily.py
+          python3 FuckDaily.py "$ACCOUNT" "$PASSWORD" "$SEVERKEY"
