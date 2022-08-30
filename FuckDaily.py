@@ -1,16 +1,14 @@
 import sys
-import os
 import requests
 import re
-import json
 
 class FuckDaily():
+    
+    def __init__(self,username,password,severkey):
+        self.username = username#账号
+        self.password = password#密码
 
-    def __init__(self):
-        self.username = os.environ['ACCOUNT']#账号
-        self.password = os.environ['PASSWORD']#密码
-
-        self.severInform = os.environ['SEVERKEY']#sever酱通知密钥
+        self.severInform = severkey#sever酱通知密钥
         # -------------------------------------------------------------------------------------------------------------
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0',
@@ -221,5 +219,5 @@ class FuckDaily():
         FuckDaily.severChan(self,severDay)
 
 if __name__ == '__main__':
-    app = FuckDaily()
+    app = FuckDaily(sys.argv[1],sys.argv[2],sys.argv[3])
     app.run()
