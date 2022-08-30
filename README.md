@@ -7,7 +7,9 @@
 
 #### 部署服务器自动签到（推荐）
 服务器上需要安装python环境和requests库
+
 `pip3 install requests`
+
 `0 1 * * * python FuckDaily.py 账号 密码 sever酱密钥`
 
 #### 关于表单内容更新
