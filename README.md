@@ -1,5 +1,5 @@
 # Fuckdaily-for-jit
-金陵科技学院每日打卡脚本
+JIT每日打卡脚本
 
 #### 使用GITHUB ACTIONS自动签到（因为外网ip原因，容易翻车）
 在本项目页面点击右上角fork，将github项目上传至你自己的仓库，Fork后在自己的仓库页面进入Action允许使用我配置好的工作环境，点击Settings，在secrets-Action里点击New repositories secrets增加`ACCOUNT`、`PASSWORD`、`SEVERKEY` 3个Secrets，分别对应你的账号、密码、方糖推送号（不需要推送可填无，需要密钥自行去获取：https://sct.ftqq.com/）
